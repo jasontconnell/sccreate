@@ -1,6 +1,8 @@
 package conf
 
-import "github.com/jasontconnell/conf"
+import (
+	"github.com/jasontconnell/conf"
+)
 
 type Style string
 
@@ -13,13 +15,15 @@ type Config struct {
 	ConnectionString string `json:"connectionString"`
 	ProtobufLocation string `json:"protobufLocation"`
 
-	TemplatePath   string `json:"templatePath"`
-	RenderingPath  string `json:"renderingPath"`
-	DatasourcePath string `json:"datasourcePath"`
-	MarkupPath     string `json:"markupPath"`
-	BackendPath    string `json:"backendPath"`
-	Namespace      string `json:"namespace"`
-	CodeStyle      Style  `json:"codeStyle"`
+	TemplatePath        string `json:"templatePath"`
+	RenderingPath       string `json:"renderingPath"`
+	DatasourcePath      string `json:"datasourcePath"`
+	DatasourceQuery     string `json:"datasourceQuery"`
+	MarkupPath          string `json:"markupPath"`
+	MarkupReferencePath string `json:"markupReferencePath"`
+	BackendPath         string `json:"backendPath"`
+	Namespace           string `json:"namespace"`
+	CodeStyle           Style  `json:"codeStyle"`
 
 	Templates []TemplateConfig `json:"templates"`
 }

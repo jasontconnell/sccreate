@@ -25,3 +25,8 @@ type TemplateModel struct {
 	CleanName string
 	Namespace string
 }
+
+type QueryModel struct {
+	FolderTemplateId string
+	TemplateId       string
+}
