@@ -14,6 +14,7 @@ import (
 func CreateRendering(connstr string, m data.ItemMap, node data.ItemNode, folderTemplate data.ItemNode, renderingPath, datasourcePath, datasourceQuery, markupReferencePath string, style conf.Style) error {
 	id := uuid.New()
 	cname := getCleanName(node.GetName()) + "Component"
+	update := false
 
 	parent := m.FindItemByPath(renderingPath)
 	if parent == nil {
@@ -22,7 +23,10 @@ func CreateRendering(connstr string, m data.ItemMap, node data.ItemNode, folderT
 
 	for _, c := range parent.GetChildren() {
 		if c.GetName() == cname {
-			return fmt.Errorf("component already exists with name %s", cname)
+			// return fmt.Errorf("component already exists with name %s", cname)
+			id = c.GetId()
+			update = true
+			break
 		}
 	}
 
@@ -66,20 +70,25 @@ func CreateRendering(connstr string, m data.ItemMap, node data.ItemNode, folderT
 	uuser := data.NewFieldValue(data.UpdatedByFieldId, rendering.GetId(), "", "sitecore\\admin", data.English, 1, data.VersionedFields)
 	rendering.AddFieldValue(uuser)
 
-	cdate := data.NewFieldValue(data.CreateDateFieldId, rendering.GetId(), "", time.Now().Format("20060201T150405"), data.English, 1, data.VersionedFields)
+	cdate := data.NewFieldValue(data.CreateDateFieldId, rendering.GetId(), "", time.Now().Format("20060102T150405"), data.English, 1, data.VersionedFields)
 	rendering.AddFieldValue(cdate)
+
+	udate := data.NewFieldValue(data.UpdateDateFieldId, rendering.GetId(), "", time.Now().Format("20060102T150405"), data.English, 1, data.VersionedFields)
+	rendering.AddFieldValue(udate)
 
 	upditems, updflds := api.BuildUpdateItems(m, nil, []data.ItemNode{rendering})
 
+	if update {
+		for i := 0; i < len(upditems); i++ {
+			upditems[i].UpdateType = data.Update
+		}
+
+		for i := 0; i < len(updflds); i++ {
+			updflds[i].UpdateType = data.Update
+		}
+	}
+
 	_, err := api.Update(connstr, upditems, updflds)
-
-	for _, i := range upditems {
-		fmt.Println(i)
-	}
-
-	for _, f := range updflds {
-		fmt.Println(f)
-	}
 
 	return err
 }

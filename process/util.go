@@ -37,5 +37,5 @@ func processInlineTemplate(code string, model interface{}) (string, error) {
 }
 
 func sitecoreStyleGuid(uid uuid.UUID) string {
-	return fmt.Sprintf("{%s}", strings.ToLower(uid.String()))
+	return fmt.Sprintf("{%s}", strings.ToUpper(uid.String()))
 }
