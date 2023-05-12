@@ -23,7 +23,7 @@ sccreate takes a json file (default: `config.json`) with the following configura
 
 `protobufLocation` - for Sitecore 10, the location of the items stored in protobuf format
 
-`templatePath` - this is reserved for future usage
+`templatePath` - this is reserved for future use
 
 `renderingPath` - places to create new renderings
 
