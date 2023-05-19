@@ -11,7 +11,7 @@ import (
 	"github.com/jasontconnell/sitecore/data"
 )
 
-func CreateRendering(connstr string, m data.ItemMap, node data.ItemNode, folderTemplate data.ItemNode, renderingPath, datasourcePath, datasourceQuery, markupReferencePath string, style conf.Style) error {
+func CreateRendering(connstr string, m data.ItemMap, node data.ItemNode, folderTemplate data.ItemNode, renderingPath, datasourcePath, datasourceQuery, markupReferencePath, controllerTemplate, namespace string, style conf.Style) error {
 	id := uuid.New()
 	cname := getCleanName(node.GetName()) + "Component"
 	update := false
@@ -42,7 +42,13 @@ func CreateRendering(connstr string, m data.ItemMap, node data.ItemNode, folderT
 		pathfv := data.NewFieldValue(data.SublayoutRenderingPathFieldId, rendering.GetId(), "", rpath, data.English, 1, data.SharedFields)
 		rendering.AddFieldValue(pathfv)
 	} else if style == conf.MVC {
-		return fmt.Errorf("not yet supported")
+		tmodel := TemplateModel{Name: node.GetName(), CleanName: getCleanName(node.GetName()), Namespace: namespace}
+		controllerval, err := processInlineTemplate(controllerTemplate, tmodel)
+		if err != nil {
+			return fmt.Errorf("couldn't process template for controller %s. %w", controllerTemplate, err)
+		}
+		controller := data.NewFieldValue(data.ControllerRenderingControllerFieldId, rendering.GetId(), "", controllerval, data.English, 1, data.SharedFields)
+		rendering.AddFieldValue(controller)
 	}
 
 	dstmpfv := data.NewFieldValue(data.RenderingDatasourceTemplateFieldId, rendering.GetId(), "", node.GetPath(), data.English, 1, data.SharedFields)

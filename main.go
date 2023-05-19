@@ -43,6 +43,8 @@ func main() {
 		cfg.DatasourcePath,
 		cfg.DatasourceQuery,
 		cfg.MarkupReferencePath,
+		cfg.ControllerTemplate,
+		cfg.Namespace,
 		cfg.CodeStyle,
 	)
 

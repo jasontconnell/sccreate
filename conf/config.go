@@ -21,6 +21,7 @@ type Config struct {
 	DatasourceQuery     string `json:"datasourceQuery"`
 	MarkupPath          string `json:"markupPath"`
 	MarkupReferencePath string `json:"markupReferencePath"`
+	ControllerTemplate  string `json:"controllerTemplate"`
 	BackendPath         string `json:"backendPath"`
 	Namespace           string `json:"namespace"`
 	CodeStyle           Style  `json:"codeStyle"`

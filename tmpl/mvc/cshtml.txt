@@ -1,0 +1,2 @@
+@model {{.Namespace}}.{{.CleanName}}Model
+

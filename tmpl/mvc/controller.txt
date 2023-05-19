@@ -1,0 +1,12 @@
+using System.Web.Mvc;
+
+
+namespace {{.Namespace}} 
+{ 
+    public class {{.CleanName}}Controller : Controller 
+    {
+        public ActionResult Index() {
+            return View();
+        }
+    }
+}
