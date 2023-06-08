@@ -24,6 +24,11 @@ func main() {
 		log.Fatal(err)
 	}
 
+	if *tmpId == "" {
+		flag.PrintDefaults()
+		return
+	}
+
 	tid := api.MustParseUUID(*tmpId)
 	node, ok := m[tid]
 	if !ok || node.GetTemplateId() != data.TemplateID {
